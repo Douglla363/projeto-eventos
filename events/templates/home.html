@@ -1,0 +1,54 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}HDC Events{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="search-container" class="col-md-12">
+        <h1>Busque um evento</h1>
+        <form method="GET">
+            <input type="text" id="search" name="search" class="form-control" placeholder="Procurar...">
+        </form>
+    </div>
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <div id="events-container" class="container col-md-12">
+        {% if request.GET.search %}
+        <h2>Buscando por: {{ request.GET.search }}</h2>
+        {% else %}
+        <h2>Próximos Eventos</h2>
+        <p class="subtitle">Veja os eventos dos próximos dias</p>
+        {% endif %}
+        <div id="cards-container" class="row">
+            {% for event in events %}
+            <div class="card col-md-3">
+                <img src="/uploads/{{ event.image }}" alt="{{ event.title }}">
+                <div class="card-body">
+                    <p class="card-date">{{ event.date|date:"d/m/Y" }}</p>
+                    <h5 class="card-title">{{ event.title }}</h5>
+                    <p class="card-participantes">X participantes</p>
+                    <a href="/events/{{ event.id }}" class="btn btn-primary">Saber mais</a>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not events and request.GET.search %}
+            <p>Não foi possível encontrar nenhum evento com {{ request.GET.search }}! <a href="/"> Ver todos!</a></p>
+            {% elif not events %}
+            <p>Não há eventos disponíveis</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

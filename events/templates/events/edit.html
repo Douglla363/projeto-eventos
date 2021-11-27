@@ -1,0 +1,82 @@
+{% extends 'layouts/main.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Editando: '{{ event.title }}'{% endblock %}
+
+{% block content %}
+
+<!--
+<div class="col-md-6 offset-md-3 list-div">
+    <h2 class="card-title">Editando: '{{ event.title }}'</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <img src="/uploads/{{ event.image }}" alt="{{ event.title }}" class="img-preview">
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-primary" value="Editar tarefa">
+    </form>
+</div>
+-->
+
+
+<div id="event-create-container" class="col-md-6 offset-md-3">
+    <h1 class="mb-3">Editando: {{ event.title }}</h1>
+    <form action="" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+
+        <div class="form-group mb-3">
+            <label for="image" class="form-label">Imagem do evento:</label>
+            <input type="file" name="image" id="image" class="form-control-file">
+            <img src="/uploads/{{ event.image }}" alt="{{ event.title }}" class="img-preview">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="title" class="form-label">Evento</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Nome do evento..."
+                value="{{ event.title }}" required>
+            <div class="invalid-feedback">
+                Este campo é de preenchimento obrigatório
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="date" class="form-label">Data do evento</label>
+            <input type="datetime" class="form-control" name="date" id="date" required
+                value="{{ event.date|date:'d/m/Y' }}">
+            <div class="invalid-feedback">
+                Este campo é de preenchimento obrigatório
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="city" class="form-label">Cidade</label>
+            <input type="text" class="form-control" name="city" id="city" placeholder="Local do evento..."
+                value="{{ event.city }}" required>
+            <div class="invalid-feedback">
+                Este campo é de preenchimento obrigatório
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="private" class="form-label">O evento é privado?</label>
+            <select name="private" id="private" class="form-control" required>
+                <option value="0">Não</option>
+                <option value="1">Sim</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="description" class="form-label">Descrição</label>
+            <textarea class="form-control" name="description" id="description" rows="3"
+                placeholder="O que vai acontecer no avento..." required>{{ event.description }}</textarea>
+            <div class="invalid-feedback">
+                Este campo é de preenchimento obrigatório
+            </div>
+        </div>
+
+        <div class="mb-3 text-center">
+            <input type="submit" class="btn btn-primary" value="Editar Evento">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'layouts/main.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="col-md-10 offset-md-1 dashboard-title-container">
+    <h1>Meus Eventos</h1>
+</div>
+<div class="col-md-10 offset-md-1 dashboard-events-container">
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="alert alert-{{ message.tags }}" {% endif %}>
+            {{ message }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    {% if not events %}
+    <p>Você ainda não tem eventos, <a href="/events/create">Criar evento</a></p>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Participantes</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td scope="row">
+                    {{ forloop.counter }}
+                </td>
+                <td><a href="/events/{{ event.id }}">
+                        {{ event.title }}
+                </td>
+                <td>0</td>
+                <td>
+                    <a href="/edit/{{ event.id }}" class="btn btn-outline-info btn-sm edit-btn">
+                        <ion-icon name="create-outline"></ion-icon>
+                        Editar
+                    </a>
+                    <a href="/delete/{{ event.id }}" class="btn btn-outline-danger btn-sm delete-btn">
+                        <ion-icon name="trash-outline"></ion-icon>
+                        Deletar
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
