@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [
     'https://projetos-eventos.herokuapp.com',
     'http://projetos-eventos.herokuapp.com/',
     'https://projetos-eventos.herokuapp.com/',
-    '127.0.0.1'
+    '127.0.0.1',
 ]
 
 
